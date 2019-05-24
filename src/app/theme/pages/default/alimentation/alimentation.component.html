@@ -1,0 +1,132 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Theme style -->
+    <link rel="stylesheet" media="screen,print" href="../../../../../assets/css/AdminLTE.min.css">
+</head>
+
+
+<div class="m-content">
+    <h3 class="m-subheader__title m-subheader__title--separator">
+        Alimentation
+    </h3><br>
+    <div>
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Recherche par critères</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Date :</label>
+
+                            <div class="input-group date">
+                                <input [(ngModel)]="selectedDate" (ngModelChange)="getDetailAlimentData()" type="date"
+                                       class="form-control pull-right" id="datepicker">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Périodes :</label>
+                            <select [(ngModel)]="selectedPeriod" (ngModelChange)="getDetailAlimentData()"
+                                    class="form-control select2"
+                                    style="width: 100%;">
+                                <option [value]="Null">Tous les périodes</option>
+                                <option *ngFor="let period of allPeriods"
+                                        [value]="period.id">{{period.periode}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Paddocks :</label>
+                            <select [(ngModel)]="selectedPaddock" (ngModelChange)="getDetailAlimentData()"
+                                    class="form-control select2"
+                                    style="width: 100%;">
+                                <option [value]="Null">Tous les paddocks</option>
+                                <option *ngFor="let paddock of allPaddocks"
+                                        [value]="paddock.id">{{paddock.nom}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nourritures :</label>
+                            <select [(ngModel)]="selectedRation" (ngModelChange)="getDetailAlimentData()"
+                                    class="form-control select2"
+                                    style="width: 100%;">
+                                <option [value]="Null">Tous les nourriture</option>
+                                <option *ngFor="let ration of allRations"
+                                        [value]="ration.id">{{ration.nom}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-primary">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"> Résultats de recherche : </h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Période</th>
+                                    <th>Nourriture</th>
+                                    <th>Paddock</th>
+                                    <th>Quantité</th>
+                                    <th>Nbr éléments</th>
+                                    <th>Note</th>
+                                    <th>Moy/élément</th>
+                                    <th>Commentaire</th>
+                                    <th>Utilisateur</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let data of detailAlimentationData">
+                                    <td>{{data.periode}}</td>
+                                    <td>{{data.rationName}}</td>
+                                    <td>{{data.paddockName}}</td>
+                                    <td>{{data.quantite}}</td>
+                                    <td>{{data.nbrVache}}</td>
+                                    <td>{{data.note}}</td>
+                                    <td>{{data.moyElemnt}}</td>
+                                    <td>{{data.commentaire}}</td>
+                                    <td>{{data.user_login}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</html>

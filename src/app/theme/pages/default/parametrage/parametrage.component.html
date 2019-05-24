@@ -1,0 +1,563 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Theme style -->
+    <link rel="stylesheet" media="screen,print" href="../../../../../assets/css/AdminLTE.min.css">
+</head>
+
+
+<div class="m-content">
+    <h3 class="m-subheader__title m-subheader__title--separator">
+        Les paramétrages
+    </h3><br>
+    <div>
+
+        <div class="box box-primary"><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajouter un type de paddock</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Type :</label>
+                                <div class="input-group date">
+                                    <input [(ngModel)]="paddockType" type="text"
+                                           class="form-control pull-right">
+                                </div>
+                            </div>
+                            <button (click)="refreshTypPaddockUI()" class="btn btn-primary" style="margin-right: 2px"><i
+                                    class="fa fa-refresh"></i>
+                            </button>
+                            <button (click)="saveTypePaddock()" [disabled]="disablAddTypPaddock" class="btn btn-info"><i
+                                    class="fa fa-plus"></i></button>
+                            <button (click)="editTypPaddock()" class="btn btn-success" [disabled]="disablEditTypPaddock"
+                                    style="margin-left: 2px"><i
+                                    class="fa fa-edit"></i></button>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> Liste des types des paddocks : </h3>
+                                </div>
+                                <div class="box-body">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Editer</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let data of newPaddocksType">
+                                            <td>{{data.type}}</td>
+                                            <td>
+                                                <button (click)="toEditTypPaddock(data)" class="btn btn-success"><i
+                                                        class="fa fa-edit"></i>
+                                                </button>
+                                                <button (click)="removeSelectedTypPaddockl(data)" class="btn btn-danger"
+                                                        style="margin-left: 2px"><i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajouter un paddock : </h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Nom :</label>
+                                <div class="input-group date">
+                                    <input [(ngModel)]="paddockName" type="text" class="form-control pull-right">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Type :</label>
+                                <select [(ngModel)]="typeOfNewPaddock" class="form-control select2"
+                                        style="width: 100%;">
+                                    <option [value]="Null"> --Select--</option>
+                                    <option *ngFor="let typePaddock of allPaddockType"
+                                            [ngValue]="{id: typePaddock.id, type: typePaddock.type}"> {{typePaddock.type}}</option>
+                                </select>
+                            </div>
+                            <button (click)="refreshPaddockUI()" class="btn btn-primary"><i class="fa fa-refresh"></i>
+                            </button>
+                            <button (click)="savePaddock()" [disabled]="disablAddPaddock" class="btn btn-info"
+                                    style="margin-left: 2px"><i class="fa fa-plus"></i></button>
+                            <button (click)="editPaddock()" [disabled]="disablEditPaddock" class="btn btn-success"
+                                    style="margin-left: 2px"><i class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> Liste des paddocks : </h3>
+                                </div>
+                                <div class="box-body">
+                                    <table id="example2" class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Type</th>
+                                            <th>Opération</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let data of newPaddocks">
+                                            <td>{{data.nom}}</td>
+                                            <td>{{data.typOfPaddock.type}}</td>
+                                            <td>
+                                                <button (click)="toEditSelectedPaddock(data)" class="btn btn-success"><i
+                                                        class="fa fa-edit"></i></button>
+                                                <button (click)="removePaddock(data)" class="btn btn-danger"
+                                                        style="margin-left: 2px"><i
+                                                        class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary"><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajouter un animal</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>SNIT :</label>
+                                <div class="input-group date">
+                                    <input [(ngModel)]="snit" type="text"
+                                           class="form-control pull-right">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Paddock :</label>
+                                <select [(ngModel)]="paddockOfAnimal" class="form-control select2"
+                                        style="width: 100%;">
+                                    <option *ngFor="let paddock of allPaddocks"
+                                            [ngValue]="{id: paddock.id, nom: paddock.nom}"> {{paddock.nom}}</option>
+                                </select>
+                            </div>
+                            <button (click)="refreshAnimalUI()" class="btn btn-primary" style="margin-right: 2px"><i
+                                    class="fa fa-refresh"></i>
+                            </button>
+                            <button (click)="saveAnimal()" [disabled]="disablAddAnimal" class="btn btn-info"><i
+                                    class="fa fa-plus"></i>
+                            </button>
+                            <button (click)="editSelectedAnimal()" [disabled]="disablEditAnimal" class="btn btn-success"
+                                    style="margin-left: 2px"><i
+                                    class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> Liste des animaux : </h3>
+                                </div>
+                                <div class="box-body">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>SNIT</th>
+                                            <th>Paddock</th>
+                                            <th>Opération</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let data of newAnimals">
+                                            <td>{{data.snit}}</td>
+                                            <td>{{data.paddock}}</td>
+                                            <td>
+                                                <button (click)="toEdit(data)" class="btn btn-success"><i
+                                                        class="fa fa-edit"></i>
+                                                </button>
+                                                <button (click)="removeSelectedAnimal(data)" class="btn btn-danger"
+                                                        style="margin-left: 2px"><i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-primary"><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajouter un ingredient</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Nom :</label>
+                                <div class="input-group date">
+                                    <input [(ngModel)]="ingredientName" type="text"
+                                           class="form-control pull-right">
+                                </div>
+                            </div>
+                            <button (click)="refreshIngrdUI()" class="btn btn-primary" style="margin-right: 2px"><i
+                                    class="fa fa-refresh"></i></button>
+                            <button (click)="saveIngredient()" [disabled]="disableAddIngrd" class="btn btn-info"><i
+                                    class="fa fa-plus"></i></button>
+                            <button (click)="editSelectedIngrd()" [disabled]="disableEditIngrd" class="btn btn-success"
+                                    style="margin-left: 2px"><i
+                                    class="fa fa-edit"></i></button>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> Liste des ingredients : </h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Opération</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let data of newIngredients">
+                                            <td>{{data.ingredientName}}</td>
+                                            <td>
+                                                <button (click)="toEditSelectedIngrdt(data)" class="btn btn-success"><i
+                                                        class="fa fa-edit"></i></button>
+                                                <button (click)="deleteIngredient(data)" class="btn btn-danger"
+                                                        style="margin-left: 2px"><i
+                                                        class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajouter une nourriture : </h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Nom :</label>
+                                <div class="input-group date">
+                                    <input [(ngModel)]="rationName" type="text" class="form-control pull-right">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Type :</label>
+                                <ng-multiselect-dropdown
+                                        [data]="allIngrdnts"
+                                        [(ngModel)]="selectedIngrdnts"
+                                        [settings]="ingrdDropDownSettings"
+                                        (ngModelChange)="getSelectedIngrdnt()">
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"> Formule des ingredients : </h3>
+                            </div>
+                            <div class="box-body">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Ingredient</th>
+                                        <th>Formule (%)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let data of ingredntsOfNourritur">
+                                        <td>{{data.nom}}</td>
+                                        <td><input [(ngModel)]="data.formule" type="number" class="form-group"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button (click)="saveRation()" class="btn btn-info" style="margin-left: 20px"><i
+                                    class="fa fa-plus"></i>
+                            </button>
+                            <br><br>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary"><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajouter une machine</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Nom :</label>
+                                <div class="input-group date">
+                                    <input [(ngModel)]="machineName" type="text"
+                                           class="form-control pull-right">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Capacité :</label>
+                                <div class="input-group date">
+                                    <input [(ngModel)]="machineCapacite" type="text"
+                                           class="form-control pull-right">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Spécialité :</label>
+                                <ng-multiselect-dropdown
+                                        [data]="allRations"
+                                        [(ngModel)]="selectedRations"
+                                        [settings]="rationDropDowSettings">
+                                </ng-multiselect-dropdown>
+                            </div>
+                            <button (click)="refreshMachineUI()" class="btn btn-primary" style="margin-right: 2px"><i
+                                    class="fa fa-refresh"></i>
+                            </button>
+                            <button (click)="saveMachine()" [disabled]="disablAddAnimal" class="btn btn-info"><i
+                                    class="fa fa-plus"></i>
+                            </button>
+                            <button class="btn btn-success"
+                                    style="margin-left: 2px"><i
+                                    class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> Liste des machines : </h3>
+                                </div>
+                                <div class="box-body">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Capacité</th>
+                                            <th>Specialité</th>
+                                            <th>Opération</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let data of machineDetails">
+                                            <td>{{data.machineName}}</td>
+                                            <td>{{data.capacite}}</td>
+                                            <td>{{data.specialite}}</td>
+                                            <td>
+                                                <button (click)="removeMachine(data)" class="btn btn-danger"
+                                                        style="margin-left: 2px"><i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary"><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajouter une période d'alimentation</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Nom :</label>
+                                <div class="input-group date">
+                                    <input [(ngModel)]="periodName" type="text"
+                                           class="form-control pull-right">
+                                </div>
+                            </div>
+                            <button (click)="refreshPeriodUI()" class="btn btn-primary" style="margin-right: 2px"><i
+                                    class="fa fa-refresh"></i>
+                            </button>
+                            <button (click)="savePeriode()" [disabled]="disablAddPeriod" class="btn btn-info"><i
+                                    class="fa fa-plus"></i>
+                            </button>
+                            <button (click)="editPeriod()" [disabled]="disableEditPeriode" class="btn btn-success"
+                                    style="margin-left: 2px"><i
+                                    class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> Liste des périodes : </h3>
+                                </div>
+                                <div class="box-body">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Opération</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let data of newPeriods">
+                                            <td>{{data.periodName}}</td>
+                                            <td>
+                                                <button (click)="removePeriode(data)" class="btn btn-danger"><i
+                                                        class="fa fa-trash"></i>
+                                                </button>
+                                                <button (click)="toEditPeriod(data)" class="btn btn-success"
+                                                        style="margin-left: 2px"><i
+                                                        class="fa fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary"><br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajouter un utilisateur</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Matricule :</label>
+                                <div class="input-group text">
+                                    <input [(ngModel)]="userMatricule" type="text"
+                                           class="form-control pull-right">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mot de passe :</label>
+                                <div class="input-group text">
+                                    <input [(ngModel)]="userMatricule" [disabled]="true" type="password"
+                                           class="form-control pull-right">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" style="margin-right: 2px"><i
+                                    class="fa fa-refresh"></i>
+                            </button>
+                            <button (click)="saveUser()" class="btn btn-info"><i
+                                    class="fa fa-plus"></i>
+                            </button>
+                            <button class="btn btn-success"
+                                    style="margin-left: 2px"><i
+                                    class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"> Liste des utilisateurs : </h3>
+                                </div>
+                                <div class="box-body">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Opération</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let data of newUsers">
+                                            <td>{{data.matricule}}</td>
+                                            <td>
+                                                <button (click)="removeUser(data)" class="btn btn-danger"><i
+                                                        class="fa fa-trash"></i>
+                                                </button>
+                                                <button (click)="toEditPeriod(data)" class="btn btn-success"
+                                                        style="margin-left: 2px"><i
+                                                        class="fa fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</html>

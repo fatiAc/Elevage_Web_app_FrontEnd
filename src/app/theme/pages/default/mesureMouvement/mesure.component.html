@@ -1,0 +1,195 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Theme style -->
+    <link rel="stylesheet" media="screen,print" href="../../../../../assets/css/AdminLTE.min.css">
+</head>
+
+<div class="m-content">
+
+    <h3 class="m-subheader__title m-subheader__title--separator">
+        Les mesures et les mouvements
+    </h3><br>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Recherche des mesures</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Date :</label>
+                        <div class="input-group date">
+                            <input [(ngModel)]="mesureDate" (ngModelChange)="getMesureData()" type="date"
+                                   class="form-control pull-right" id="datpicker">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Animal :</label>
+                        <select [(ngModel)]="animalMesure" (ngModelChange)="getMesureData()"
+                                class="form-control select2"
+                                style="width: 100%;">
+                            <option [value]="Null"> Tous les animaux</option>
+                            <option *ngFor="let animal of allAnimals"
+                                    [value]="animal.snit"> {{animal.snit}}</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Date min :</label>
+                                <div class="input-group date">
+                                    <input [(ngModel)]="dateMin" (ngModelChange)="getMesureData()" type="date"
+                                           class="form-control pull-right">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Date max :</label>
+                                <div class="input-group date">
+                                    <input [(ngModel)]="dateMax" (ngModelChange)="getMesureData()" type="date"
+                                           class="form-control pull-right">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"> Résultats de recherche : </h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="kk" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>SNIT</th>
+                                        <th>Poids</th>
+                                        <th>Utilisateur</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let data of mesureData">
+                                        <td>{{data.snit}}</td>
+                                        <td>{{data.poids}}</td>
+                                        <td>{{data.login}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Recherche des mouvements</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <label>Date :</label>
+                        <div class="input-group date">
+                            <input [(ngModel)]="mouvmntDate" (ngModelChange)="getMouvmntData()" type="date"
+                                   class="form-control pull-right" id="oo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Animal :</label>
+                        <select [(ngModel)]="animalMvmnt" (ngModelChange)="getMouvmntData()"
+                                class="form-control select2"
+                                style="width: 100%;">
+                            <option [value]="Null"> Tous les animaux</option>
+                            <option *ngFor="let animal of allAnimals"
+                                    [value]="animal.snit"> {{animal.snit}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Utilisateur :</label>
+                        <select [(ngModel)]="userLogin" (ngModelChange)="getMouvmntData()"
+                                class="form-control select2"
+                                style="width: 100%;">
+                            <option [value]="Null"> Tous les utilisateurs</option>
+                            <option *ngFor="let user of users"
+                                    [value]="user.login"> {{user.login}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-primary">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"> Résultats de recherche : </h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Source</th>
+                                        <th>Destination</th>
+                                        <th>SNIT</th>
+                                        <th>Utilisateur</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let data of mouvmntData">
+                                        <td>{{data.dateMvnt}}</td>
+                                        <td>{{data.paddockSrc}}</td>
+                                        <td>{{data.paddockDest}}</td>
+                                        <td>{{data.snit}}</td>
+                                        <td>{{data.user_login}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</html>
